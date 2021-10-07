@@ -31,7 +31,7 @@ const SavedBooks = () => {
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
+    console.log(bookId);
     if (!token) {
       return false;
     }
@@ -40,7 +40,8 @@ const SavedBooks = () => {
       const { data } = await removeBook({
         variables: { bookId },
       });
-
+      console.log("this is working");
+      console.log(data);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
@@ -68,7 +69,6 @@ const SavedBooks = () => {
         </h2>
         <CardColumns>
           {userData.savedBooks.map((book) => {
-            console.log(book);
             return (
               <Card key={book.bookId} border="dark">
                 {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant="top" /> : null}
